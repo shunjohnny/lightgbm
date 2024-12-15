@@ -2,8 +2,9 @@
 
 <html>
 <head>
-<title>機械学習アゲアゲ講座🎉</title>
+<title>3.2 ロジスティック回帰で二値分類マスター！✨</title>
 <link href="../styles/styles.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <style>
     <style>
     body {
@@ -119,112 +120,105 @@
 <body>
 <div class="container">
 <div class="header">
-<h1>1.1 予測モデル入門！✨</h1>
-<p>機械学習の全体像をバッチリ理解しちゃおう！</p>
+<h1>3.2 ロジスティック回帰でマジ予測！👩‍💻✨</h1>
+<p>線形回帰をベースに確率予測しちゃう超パワフルな手法だよ～！解釈もしやすいからマジおすすめ！💕</p>
 </div>
 <div class="content">
+<!-- アルゴリズム解説 -->
 <div class="card">
-<h2>🌟 イントロダクション</h2>
-<p>機械学習マジすごい！人工知能の一分野として発展してきて、データから自動的に学習するアルゴリズムが開発されたの！これまでは人間が手作業でデータ分析してたけど、今は機械学習がパターンを見つけ出してくれるの！超便利～！</p>
+<h2>💫 ロジスティック回帰のアルゴリズム超解説！</h2>
 <div class="feature">
-<h3>機械学習の種類だよ！</h3>
-<ul>
-<li>教師あり学習：答えがあるデータで学習するタイプ✏️</li>
-<li>教師なし学習：答えがなくてもパターンを見つけちゃう！</li>
-<li>強化学習：トライ&amp;エラーで最強になっていくの！</li>
-</ul>
+<p>線形回帰の予測値をラベル1の確率に変換しちゃうの！つまり、予測したい値を0～1の間の確率にするってこと！✨</p>
+<div class="formula">
+<div class="formula-main">
+              まずは線形回帰みたいな感じで計算！：
+              \[ \hat{y} = w_0 + \sum_{j=1}^m w_jx_j = w_0 + \mathbf{w}^T\mathbf{x} \]
+              
+              これをシグモイド関数で確率に変換！：
+              \[ \sigma(x) = \frac{1}{1+\exp(-x)} \]
+            </div>
 </div>
-</div>
-<div class="card">
-<h2>📊 テーブルデータの特徴量と目的変数</h2>
-<div class="code">
-ユーザーID | 性別 | 年齢 | サイトで使った金額 | クリック
-1         | F    | 31  | 0              | 0
-2         | M    | 49  | 4000           | 1
-...       | ...  | ... | ...            | ...
-1000      | M    | 35  | 1500           | 1
-      </div>
-<div class="tip">
-<h4>構造化データと非構造化データの違い✨</h4>
-<p>構造化データはテーブル形式、非構造化データは画像や音声とかだよ！それぞれに得意な学習方法があるの！</p>
-</div>
-</div>
-<div class="card">
-<h2>🎯 予測モデルの作り方</h2>
-<div class="feature">
-<h3>①データの分割</h3>
-<p>まずデータを「学習用」と「評価用」に分けるの！これ超大事！✨</p>
-</div>
-<div class="feature">
-<h3>特徴量(x)と目的変数(y)</h3>
-<ul>
-<li>特徴量：予測に使う情報（年齢、性別など）</li>
-<li>目的変数：予測したい値（購入確率など）</li>
-</ul>
-</div>
-<div class="tip">
-<h4>使えるライブラリ✨</h4>
-<p>テーブルデータなら scikit-learn、xgboost、lightgbm とかが使えるよ！</p>
-</div>
-</div>
-<div class="card">
-<h2>💫 予測モデルの3ステップ</h2>
-<div class="feature">
-<h3>①学習フェーズ</h3>
-<p>モデルのパラメータを調整して、予測値と実際の値の誤差を小さくしていくの！</p>
-</div>
-<div class="feature">
-<h3>②予測フェーズ</h3>
-<p>学習が終わったら、新しいデータで予測値を出していくよ！パラメータは固定だよ！</p>
-</div>
-<div class="feature">
-<h3>③評価フェーズ</h3>
-<p>予測がどれくらい当たってるかスコアをつけるの！テストデータで確認するよ！</p>
-</div>
-<div class="warning">
-<h4>⚠️ 評価の重要ポイント！</h4>
-<p>評価には必ず学習に使ってないデータを使うの！そうしないと正しい評価にならないよ！</p>
-</div>
-</div>
-<div class="card">
-<h2>📊 実践的な運用例</h2>
 <div class="success">
-<h4>月次予測システムの例</h4>
-<p>前月までの実績データを使って、今月の予測を立てる感じ！</p>
+<h4>✨ シグモイド関数のスゴイとこ！</h4>
+<ul>
+<li>マイナスの値を入れると0.5より小さい確率が出てくる！</li>
+<li>プラスの値を入れると0.5より大きい確率になる！</li>
+<li>どんな値入れても0～1の間の値になるの！マジ便利！</li>
+</ul>
 </div>
-<table>
-<tr>
-<th>時期</th>
-<th>実行内容</th>
-<th>データ状態</th>
-</tr>
-<tr>
-<td>1月時点</td>
-<td>1月末までの予測実行</td>
-<td>実績値なしの状態</td>
-</tr>
-<tr>
-<td>2月時点</td>
-<td>1月分の評価実施</td>
-<td>1月実績確定済み</td>
-</tr>
-</table>
+</div>
+</div>
+<!-- 学習方法 -->
+<div class="card">
+<h2>🎯 学習の方法をマスターしちゃお！</h2>
+<div class="feature">
+<p>勾配降下法使って学習していくよ！目的関数は二値交差エントロピーってやつを使うの！💪</p>
+<div class="formula">
+<div class="formula-main">
+              二値交差エントロピーの式はこんな感じ！：
+              \[ l(y_i, p_i) = -[y_i \log(p_i) + (1-y_i)\log(1-p_i)] \]
+            </div>
+</div>
 <div class="warning">
-<h4>⚠️ 運用時の注意点</h4>
-<p>予測実行時は実績値がまだないから評価できないの！実績データが揃うまで待つ必要があるよ！</p>
+<h4>💡 ここがポイント！</h4>
+<ul>
+<li>正解が1の時は確率が1に近いほど誤差小さい！</li>
+<li>正解が0の時は確率が0に近いほど誤差小さい！</li>
+<li>予測が外れるほど誤差はマジ大きくなる！</li>
+</ul>
 </div>
 </div>
 </div>
-<a class="back-button" href="../index.html">
-<span>←</span> インデックス
-  </a>
-<button class="sidebar-toggle" id="sidebarToggle">
-<span>📑</span>
-</button>
-<div class="sidebar" id="sidebar">
-<nav class="sidebar-content">
-<a class="sidebar-item" href="1-1.html">🤖 予測モデル入門</a>
-</nav>
+<!-- 実装編 -->
+<div class="card">
+<h2>👩‍💻 実装していっちゃおう！</h2>
+<div class="feature">
+<div class="code code-python">
+# まずはデータの前処理！
+# カテゴリ変数をone-hotエンコーディング✨
+X = pd.concat([X, pd.get_dummies(X['workclass'], 
+    prefix='workclass', drop_first=True)], axis=1)
+
+# 特徴量の標準化も忘れずに！
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+
+# モデルの学習START！
+model = LogisticRegression(max_iter=100, multi_class='ovr',
+    solver='liblinear', C=0.1, penalty='l1', random_state=0)
+model.fit(X_train, y_train)
+          </div>
+<div class="tip">
+<h4>🌈 パラメータの意味</h4>
+<ul>
+<li>C=0.1: 正則化の強さ！小さいほど厳しく！</li>
+<li>penalty='l1': L1正則化で特徴量選択しちゃう！</li>
+<li>solver='liblinear': L1正則化に対応した解法！</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- 評価方法 -->
+<div class="card">
+<h2>📊 予測結果を評価しちゃお！</h2>
+<div class="feature">
+<p>accuracyとF1-scoreで評価するよ！精度は0.84で、F1-scoreは0.64！まずまずの成績！✨</p>
+<div class="code code-python">
+# 予測してみよう！
+y_pred = model.predict(X_test)
+print(f'accuracy = {accuracy_score(y_test, y_pred):.2f}')
+print(f'F1-score = {f1_score(y_test, y_pred):.2f}')
+          </div>
+<div class="success">
+<h4>💝 解釈のコツ！</h4>
+<ul>
+<li>capital-gainの係数が高いの = お金持ちは収入が高い確率アップ！</li>
+<li>教育レベルも重要な特徴量！</li>
+<li>解釈しやすいのがロジスティック回帰のいいとこ！</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 
 <a class="back-button" href="../index.html">
@@ -257,12 +251,5 @@
         });
     </script>
 </div>
-<script>
-    document.getElementById("sidebarToggle")?.addEventListener("click", function() {
-        const sidebar = document.getElementById("sidebar");
-        sidebar?.classList.toggle("open");
-        this.classList.toggle("active");
-    });
-</script>
 </body>
 </html>

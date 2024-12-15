@@ -2,8 +2,9 @@
 
 <html>
 <head>
-<title>機械学習アゲアゲ講座🎉</title>
+<title>3.3 LightGBM分類超入門！✨</title>
 <link href="../styles/styles.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <style>
     <style>
     body {
@@ -119,112 +120,133 @@
 <body>
 <div class="container">
 <div class="header">
-<h1>1.1 予測モデル入門！✨</h1>
-<p>機械学習の全体像をバッチリ理解しちゃおう！</p>
+<h1>3.3 LightGBM分類でマジ予測！✨</h1>
+<p>勾配ブースティングと予測の解釈をマスターしちゃおう！💕</p>
 </div>
 <div class="content">
+<!-- アルゴリズム解説 -->
 <div class="card">
-<h2>🌟 イントロダクション</h2>
-<p>機械学習マジすごい！人工知能の一分野として発展してきて、データから自動的に学習するアルゴリズムが開発されたの！これまでは人間が手作業でデータ分析してたけど、今は機械学習がパターンを見つけ出してくれるの！超便利～！</p>
+<h2>💫 勾配ブースティング分類のアルゴリズム</h2>
 <div class="feature">
-<h3>機械学習の種類だよ！</h3>
+<p>2.4節の勾配ブースティング回帰と3.2節のロジスティック回帰を組み合わせた超パワフルなアルゴリズムだよ！<br/>まずはアルゴリズムの基本をバッチリ理解しちゃお！✨</p>
+<div class="formula">
+<div class="formula-main">
+              予測モデルの式はこんな感じ！：
+              \[ \hat{y} = \hat{y}^{(0)} + \sum_{k=1}^K w_k(\mathbf{x}) \]  
+            </div>
+</div>
+<div class="formula">
+<div class="formula-main">            
+              確率に変換するシグモイド関数：
+              \[ \sigma(x) = \frac{1}{1+\exp(-x)} \]
+            </div>
+</div>
+<div class="tip">
+<h4>🌟 ポイント</h4>
 <ul>
-<li>教師あり学習：答えがあるデータで学習するタイプ✏️</li>
-<li>教師なし学習：答えがなくてもパターンを見つけちゃう！</li>
-<li>強化学習：トライ&amp;エラーで最強になっていくの！</li>
+<li>初期値から徐々に予測を良くしていくの！</li>
+<li>シグモイド関数で0~1の確率に変換！</li>
+<li>木を500本も作っちゃう！すごくない？✨</li>
 </ul>
 </div>
 </div>
+</div>
+<!-- 実装編 -->
 <div class="card">
-<h2>📊 テーブルデータの特徴量と目的変数</h2>
-<div class="code">
-ユーザーID | 性別 | 年齢 | サイトで使った金額 | クリック
-1         | F    | 31  | 0              | 0
-2         | M    | 49  | 4000           | 1
-...       | ...  | ... | ...            | ...
-1000      | M    | 35  | 1500           | 1
-      </div>
-<div class="tip">
-<h4>構造化データと非構造化データの違い✨</h4>
-<p>構造化データはテーブル形式、非構造化データは画像や音声とかだよ！それぞれに得意な学習方法があるの！</p>
-</div>
-</div>
-<div class="card">
-<h2>🎯 予測モデルの作り方</h2>
+<h2>👩‍💻 LightGBMで学習→予測→評価やってみよう！</h2>
 <div class="feature">
-<h3>①データの分割</h3>
-<p>まずデータを「学習用」と「評価用」に分けるの！これ超大事！✨</p>
-</div>
-<div class="feature">
-<h3>特徴量(x)と目的変数(y)</h3>
-<ul>
-<li>特徴量：予測に使う情報（年齢、性別など）</li>
-<li>目的変数：予測したい値（購入確率など）</li>
-</ul>
-</div>
-<div class="tip">
-<h4>使えるライブラリ✨</h4>
-<p>テーブルデータなら scikit-learn、xgboost、lightgbm とかが使えるよ！</p>
-</div>
-</div>
-<div class="card">
-<h2>💫 予測モデルの3ステップ</h2>
-<div class="feature">
-<h3>①学習フェーズ</h3>
-<p>モデルのパラメータを調整して、予測値と実際の値の誤差を小さくしていくの！</p>
-</div>
-<div class="feature">
-<h3>②予測フェーズ</h3>
-<p>学習が終わったら、新しいデータで予測値を出していくよ！パラメータは固定だよ！</p>
-</div>
-<div class="feature">
-<h3>③評価フェーズ</h3>
-<p>予測がどれくらい当たってるかスコアをつけるの！テストデータで確認するよ！</p>
-</div>
-<div class="warning">
-<h4>⚠️ 評価の重要ポイント！</h4>
-<p>評価には必ず学習に使ってないデータを使うの！そうしないと正しい評価にならないよ！</p>
-</div>
-</div>
-<div class="card">
-<h2>📊 実践的な運用例</h2>
+<div class="code code-python">
+# まずはデータを準備！
+X = df.drop(['income'], axis=1)
+y = df['income']
+
+# 学習用とテスト用にデータを分割！
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, shuffle=True, stratify=y, random_state=0)
+
+# カテゴリ変数をlabel encodingで数値に変換！
+for c in cat_cols:
+    le = LabelEncoder()
+    le.fit(X_train[c])
+    X_train[c] = le.transform(X_train[c])
+    X_test[c] = le.transform(X_test[c])
+          </div>
 <div class="success">
-<h4>月次予測システムの例</h4>
-<p>前月までの実績データを使って、今月の予測を立てる感じ！</p>
+<h4>💝 前処理のポイント！</h4>
+<ul>
+<li>カテゴリ変数は数値に変換しなきゃ！</li>
+<li>LightGBMはcategory型が使えるけど、今回はSHAPのために数値変換するよ！</li>
+</ul>
 </div>
+</div>
+</div>
+<!-- ハイパーパラメータ -->
+<div class="card">
+<h2>⚡ ハイパーパラメータを設定しよう！</h2>
+<div class="feature">
+<p>LightGBMのパラメータは全部で9個！それぞれの意味をしっかり理解しよう！✨</p>
+<div class="success">
+<h4>💫 主なパラメータたち</h4>
 <table>
 <tr>
-<th>時期</th>
-<th>実行内容</th>
-<th>データ状態</th>
+<th>パラメータ</th>
+<th>初期値</th>
+<th>説明</th>
 </tr>
 <tr>
-<td>1月時点</td>
-<td>1月末までの予測実行</td>
-<td>実績値なしの状態</td>
+<td>objective</td>
+<td>'regression'</td>
+<td>損失関数の種類！分類と回帰を切り替えられる！</td>
 </tr>
 <tr>
-<td>2月時点</td>
-<td>1月分の評価実施</td>
-<td>1月実績確定済み</td>
+<td>num_leaves</td>
+<td>31</td>
+<td>葉の最大数！多いと過学習しちゃうから注意！</td>
+</tr>
+<tr>
+<td>learning_rate</td>
+<td>0.1</td>
+<td>学習率！小さいと時間かかるけど安定するよ！</td>
 </tr>
 </table>
-<div class="warning">
-<h4>⚠️ 運用時の注意点</h4>
-<p>予測実行時は実績値がまだないから評価できないの！実績データが揃うまで待つ必要があるよ！</p>
+</div>
+<div class="code code-python">
+# パラメータ設定
+params = {
+    'objective': 'binary',  # 二値分類だよ！
+    'num_leaves': 5,       # 葉は5枚に制限！
+    'seed': 0,
+    'verbose': -1
+}
+          </div>
+</div>
+</div>
+<!-- SHAPによる解釈 -->
+<div class="card">
+<h2>🔍 SHAPで予測を解釈しちゃお！</h2>
+<div class="feature">
+<p>予測の理由を解明できちゃう超便利なSHAP！各特徴量がどれくらい予測に貢献したか見てみよう！✨</p>
+<div class="code code-python">
+# SHAPで解釈
+explainer = shap.TreeExplainer(
+    model,
+    feature_perturbation = 'tree_path_dependent'
+)
+shap_values = explainer(X_test)
+
+# 可視化
+shap.plots.waterfall(shap_values[-3])
+          </div>
+<div class="tip">
+<h4>💫 解釈のポイント</h4>
+<ul>
+<li>正の値は予測を上げる方向に働いた特徴量！</li>
+<li>負の値は予測を下げる方向に働いた特徴量！</li>
+<li>棒の長さが影響の大きさを表してるよ！</li>
+</ul>
 </div>
 </div>
 </div>
-<a class="back-button" href="../index.html">
-<span>←</span> インデックス
-  </a>
-<button class="sidebar-toggle" id="sidebarToggle">
-<span>📑</span>
-</button>
-<div class="sidebar" id="sidebar">
-<nav class="sidebar-content">
-<a class="sidebar-item" href="1-1.html">🤖 予測モデル入門</a>
-</nav>
 </div>
 
 <a class="back-button" href="../index.html">
@@ -257,12 +279,5 @@
         });
     </script>
 </div>
-<script>
-    document.getElementById("sidebarToggle")?.addEventListener("click", function() {
-        const sidebar = document.getElementById("sidebar");
-        sidebar?.classList.toggle("open");
-        this.classList.toggle("active");
-    });
-</script>
 </body>
 </html>

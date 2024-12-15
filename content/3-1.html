@@ -1,521 +1,147 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>データ理解超入門！✨</title>
-<link href="../styles/styles.css" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <title>3.1 データ理解 超解説だよ～！✨</title>
+  <link href="../styles/styles.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <h1>3.1 データ理解してみよう！🌈</h1>
-    <p>データの中身を理解して、予測モデルをパワーアップ！✨</p>
-  </div>
-
-  <div class="content">
-    <div class="card">
-      <h2>💫 データセットを見てみよう！</h2>
-      <div class="feature">
-        <p>今回使うのは1994年の米国の国勢調査データだよ！収入が「5万ドル以下」か「5万ドル超え」かを予測する二値分類問題にチャレンジするよ！✨</p>
-        
-        <div class="tip">
-          <h4>🎯 特徴量の一覧</h4>
-          <table>
-            <tr><th>列名</th><th>説明</th></tr>
-            <tr><td>age</td><td>年齢</td></tr>
-            <tr><td>workclass</td><td>雇用形態</td></tr>
-            <tr><td>education</td><td>学歴</td></tr>
-            <tr><td>marital-status</td><td>配偶者の有無</td></tr>
-            <tr><td>occupation</td><td>職業</td></tr>
-            <tr><td>relationship</td><td>世帯内の関係</td></tr>
-            <tr><td>race</td><td>人種</td></tr>
-            <tr><td>gender</td><td>性別</td></tr>
-            <tr><td>native-country</td><td>母国</td></tr>
-            <tr><td>income</td><td>収入（目的変数）</td></tr>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>🔍 データの中身を探検しよう！</h2>
-      <div class="feature">
-        <h3>まずはデータを読み込むよ！</h3>
-        <div class="code code-python">
-<span class="comment"># 必要なライブラリをインポート！✨</span>
-<span class="keyword">import</span> <span class="builtin">pandas</span> <span class="keyword">as</span> pd
-<span class="keyword">import</span> <span class="builtin">numpy</span> <span class="keyword">as</span> np
-<span class="keyword">import</span> <span class="builtin">seaborn</span> <span class="keyword">as</span> sns
-<span class="keyword">import</span> <span class="builtin">matplotlib.pyplot</span> <span class="keyword">as</span> plt
-
-<span class="comment"># データを読み込むよ！</span>
-df = pd.read_csv(<span class="string">'adult.data'</span>, header=None)
-df.columns = [<span class="string">'age'</span>, <span class="string">'workclass'</span>, <span class="string">'education'</span>, ...]
-        </div>
-      </div>
-
-      <div class="success">
-        <h4>✨ データの形を確認！</h4>
-        <ul>
-          <li>レコード数: 32,561件</li>
-          <li>特徴量の数: 14個</li>
-          <li>欠損値なし！超クリーンなデータ！</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>📊 数値データを見てみよう！</h2>
-      <div class="feature">
-        <p>数値データの分布をチェック！外れ値とかないかな？🤔</p>
-        <div class="code code-python">
-<span class="comment"># 数値データの基本統計量を確認</span>
-df.describe()
-        </div>
-
-        <div class="tip">
-          <h4>💡 ポイント！</h4>
-          <ul>
-            <li>年齢は17歳から90歳まで！平均は38.6歳くらい！</li>
-            <li>教育年数は1年から16年！平均は10年くらい！</li>
-            <li>週間労働時間は平均40時間！みんな頑張ってる！</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>🎯 カテゴリデータを分析！</h2>
-      <div class="feature">
-        <p>カテゴリ変数の分布を見てみよう！どんな特徴があるかな？✨</p>
-        
-        <div class="code code-python">
-<span class="comment"># カテゴリ変数の分布を確認</span>
-cat_cols = [<span class="string">'workclass'</span>, <span class="string">'education'</span>, <span class="string">'marital-status'</span>, ...]
-<span class="keyword">for</span> col <span class="keyword">in</span> cat_cols:
-    print(df[col].value_counts())
-        </div>
-
-        <div class="warning">
-          <h4>⚠️ 気をつけポイント！</h4>
-          <p>カテゴリの数が多すぎる変数は要注意！モデルの学習に影響が出るかも！</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>📈 評価指標をマスター！</h2>
-      <div class="feature">
-        <h3>混同行列から色んな指標が計算できるよ！</h3>
-        
-        <div class="formula">
-          <div class="formula-main">
-            \[\text{accuracy} = \frac{TP + TN}{TP + TN + FP + FN}\]
-          </div>
-          <div class="formula-explanation">
-            正解率は全体の中で正解した割合だよ！でも今回は不均衡データだから要注意！
-          </div>
-        </div>
-
-        <div class="tip">
-          <h4>💫 評価指標の使い分け</h4>
-          <ul>
-            <li>Precision: 予測が正確かどうか知りたいとき！</li>
-            <li>Recall: 見逃しを避けたいとき！</li>
-            <li>F1-score: バランスよく評価したいとき！</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container">
-    <div class="card">
-      <h2>✨ データの前処理をしていこう！</h2>
-      <div class="feature">
-        <p>まずは半角スペースを取り除いて、データをキレイにしていくよ！</p>
-        
-        <div class="code code-python">
-  <span class="comment"># カテゴリ変数のリストを作るよ！</span>
-  cat_cols = [<span class="string">'workclass'</span>, <span class="string">'education'</span>, <span class="string">'marital-status'</span>, 
-      <span class="string">'occupation'</span>, <span class="string">'relationship'</span>, <span class="string">'race'</span>, <span class="string">'gender'</span>,
-      <span class="string">'native-country'</span>, <span class="string">'income'</span>]
-  
-  <span class="comment"># 半角スペースを取り除くよ！✨</span>
-  <span class="keyword">for</span> s <span class="keyword">in</span> cat_cols:
-      df[s] = df[s].str.replace(<span class="string">' '</span>, <span class="string">''</span>)
-        </div>
-  
-        <div class="tip">
-          <h4>💡 前処理のポイント</h4>
-          <p>データをキレイにすることで、後の分析が楽になるよ！特に機械学習では超重要！</p>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <h2>👀 US限定でデータを見てみよう！</h2>
-      <div class="feature">
-        <p>United Statesのデータだけに絞って分析するよ！</p>
-  
-        <div class="code code-python">
-  <span class="comment"># United Statesのデータだけを抽出！</span>
-  df = df[df[<span class="string">'native-country'</span>].isin([<span class="string">'United-States'</span>])]
-  df = df.drop(<span class="string">'native-country'</span>, axis=1)  <span class="comment"># もう使わない列は削除！</span>
-  
-  <span class="comment"># インデックスを振り直すよ！</span>
-  df.reset_index(inplace=True, drop=True)
-        </div>
-  
-        <div class="success">
-          <h4>✨ データの形が変わったよ！</h4>
-          <ul>
-            <li>レコード数: 29,170件</li>
-            <li>特徴量の数: 14個→13個</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <h2>🎯 目的変数を準備しよう！</h2>
-      <div class="feature">
-        <p>予測したい収入のラベルを0と1に変換するよ！</p>
-  
-        <div class="code code-python">
-  <span class="comment"># income列を0,1に変換！</span>
-  df[<span class="string">'income'</span>] = df[<span class="string">'income'</span>].replace({
-      <span class="string">'<=50K'</span>: 0,  <span class="comment"># 5万ドル以下は0</span>
-      <span class="string">>50K'</span>: 1     <span class="comment"># 5万ドル超えは1</span>
-  })
-        </div>
-  
-        <div class="warning">
-          <h4>⚠️ 不均衡データに注意！</h4>
-          <p>ラベル0とラベル1の比率が約3:1で不均衡！評価指標の選び方が重要になってくるよ！</p>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <h2>📊 混同行列を理解しよう！</h2>
-      <div class="feature">
-        <p>混同行列を使って予測の正確さを評価するよ！</p>
-  
-        <div class="code code-python">
-  <span class="comment"># 予測ラベル0の場合の混同行列を作成</span>
-  cm = confusion_matrix(y_test, y_test_zeros)
-  sns.heatmap(cm, annot=True, fmt=<span class="string">'d'</span>, cmap=<span class="string">'Blues'</span>)
-        </div>
-  
-        <div class="tip">
-          <h4>💫 混同行列の見方</h4>
-          <ul>
-            <li>True Negative (TN): 正しく「5万ドル以下」と予測</li>
-            <li>False Positive (FP): 間違って「5万ドル超え」と予測</li>
-            <li>False Negative (FN): 間違って「5万ドル以下」と予測</li>
-            <li>True Positive (TP): 正しく「5万ドル超え」と予測</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <h2>💝 評価指標の計算方法</h2>
-      <div class="feature">
-        <p>それぞれの評価指標がどんな意味を持つのか見ていこう！</p>
-  
-        <div class="formula-container">
-          <div class="formula">
-            <div class="formula-main">
-              \[\text{Precision} = \frac{TP}{TP + FP}\]
-            </div>
-            <div class="formula-explanation">
-              「5万ドル超え」と予測した中で、実際に正解だった割合だよ！
-            </div>
-          </div>
-  
-          <div class="formula">
-            <div class="formula-main">
-              \[\text{Recall} = \frac{TP}{TP + FN}\]
-            </div>
-            <div class="formula-explanation">
-              実際の「5万ドル超え」のうち、正しく予測できた割合だよ！
-            </div>
-          </div>
-  
-          <div class="formula">
-            <div class="formula-main">
-              \[\text{F1-score} = \frac{2 \cdot \text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}\]
-            </div>
-            <div class="formula-explanation">
-              PrecisionとRecallのバランスを見る指標だよ！
-            </div>
-          </div>
-        </div>
-  
-        <div class="success">
-          <h4>🌟 評価指標の使い分けのコツ</h4>
-          <ul>
-            <li>見逃しを防ぎたい → Recallを重視！</li>
-            <li>誤検知を防ぎたい → Precisionを重視！</li>
-            <li>バランスを取りたい → F1-scoreを使おう！</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="container">
-    <div class="card">
-      <h2>🎯 層化分割でデータを分けよう！</h2>
-      <div class="feature">
-        <p>不均衡データだから、ラベルの比率を保ったまま分割するのが超重要！✨</p>
-        
-        <div class="code code-python">
-  <span class="comment"># 学習データとテストデータに分割！</span>
-  X_train, X_test, y_train, y_test = train_test_split(
-      X, y, 
-      test_size=0.2,           <span class="comment"># テストデータは20%</span>
-      shuffle=True,            <span class="comment"># データをシャッフル！</span>
-      stratify=y,              <span class="comment"># ラベルの比率を保つ！</span>
-      random_state=0           <span class="comment"># 再現性のため固定</span>
-  )
-        </div>
-  
-        <div class="tip">
-          <h4>💡 層化分割のメリット</h4>
-          <ul>
-            <li>学習データとテストデータでラベルの比率が同じに！</li>
-            <li>より信頼性の高い評価ができる！</li>
-            <li>不均衡データの問題に対処できる！</li>
-          </ul>
-        </div>
-      </div>
+    <div class="header">
+      <h1>3.1 データ理解マジ極めちゃお！👩‍💻✨</h1>
+      <p>今回は国勢調査のデータで年収予測にチャレンジしちゃうよ～！まずはデータの中身をバッチリ理解して、そっからガッツリ分析していくね！💕</p>
     </div>
-  
-    <div class="card">
-      <h2>📊 ラベルの分布を確認！</h2>
-      <div class="feature">
-        <p>分割後のデータがちゃんとバランス取れてるか見てみよう！</p>
-  
-        <div class="code code-python">
-  <span class="comment"># 学習データのラベル分布</span>
-  print(y_train.value_counts())
-  <span class="comment"># テストデータのラベル分布</span>
-  print(y_test.value_counts())
-        </div>
-  
-        <div class="success">
-          <h4>✨ 確認ポイント</h4>
-          <p>学習データもテストデータも、ラベル0とラベル1の比率が約3:1になってるはず！</p>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <h2>🎮 予測ラベルを作ってみよう！</h2>
-      <div class="feature">
-        <h3>全部0と予測するケース</h3>
-        <div class="code code-python">
-  <span class="comment"># 全部0のラベルを作成</span>
-  y_test_zeros = np.zeros(len(y_test))
-  
-  <span class="comment"># 混同行列を作る</span>
-  cm = confusion_matrix(y_test, y_test_zeros)
-        </div>
-  
-        <div class="tip">
-          <h4>🌟 なぜ全部0？</h4>
-          <p>モデルの性能を評価する基準として、「全部多数派のラベルを予測する」という単純な方法と比較するんだよ！</p>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <h2>💫 評価指標を計算しよう！</h2>
-      <div class="feature">
-        <p>scikit-learnの関数を使って各種指標を計算！</p>
-  
-        <div class="code code-python">
-  <span class="comment"># 各種評価指標を計算</span>
-  ac_score = accuracy_score(y_test, y_test_zeros)
-  pr_score = precision_score(y_test, y_test_zeros)
-  rc_score = recall_score(y_test, y_test_zeros)
-  f1 = f1_score(y_test, y_test_zeros)
-  
-  <span class="comment"># 結果を表示</span>
-  print(<span class="string">f'accuracy = {ac_score:.2f}'</span>)
-  print(<span class="string">f'precision = {pr_score:.2f}'</span>)
-  print(<span class="string">f'recall = {rc_score:.2f}'</span>)
-  print(<span class="string">f'F1-score = {f1:.2f}'</span>)
-        </div>
-  
-        <div class="warning">
-          <h4>⚠️ 結果の解釈に注意！</h4>
-          <ul>
-            <li>accuracyが高くても、不均衡データでは要注意！</li>
-            <li>precision=0は、1と予測したケースが全くない！</li>
-            <li>recall=0は、正解の1を一つも当てられなかった！</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  
-    <div class="card">
-      <h2>📈 可視化で理解を深めよう！</h2>
-      <div class="feature">
-        <p>混同行列をヒートマップで可視化！</p>
-  
-        <div class="code code-python">
-  <span class="comment"># ヒートマップで可視化</span>
-  plt.figure(figsize=(6, 4))
-  sns.heatmap(cm, annot=True, fmt=<span class="string">'d'</span>, cmap=<span class="string">'Blues'</span>)
-  plt.xlabel(<span class="string">'pred'</span>)
-  plt.ylabel(<span class="string">'label'</span>)
-  plt.show()
-        </div>
-  
-        <div class="success">
-          <h4>💕 可視化のポイント</h4>
-          <ul>
-            <li>数字が大きいほど濃い色で表示！</li>
-            <li>対角線上が正解の予測！</li>
-            <li>非対角要素が間違いの予測！</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container">
-    <div class="card">
-      <h2>💫 調和平均のいいところ！</h2>
-      <div class="feature">
-        <p>F1-scoreは調和平均を使ってPrecisionとRecallのバランスを見るよ！</p>
-        
-        <div class="formula">
-          <div class="formula-main">
-            \[\text{調和平均} = \frac{2ab}{a + b}\]
+
+    <div class="content">
+      <!-- 国勢調査データセット -->
+      <div class="card">
+        <h2>💫 国勢調査データセットを見てみよっ！</h2>
+        <div class="feature">
+          <p>使うデータは1994年のアメリカの国勢調査からとってきたやつだよ～！特徴量が14個もあって、予測したい年収は「5万ドル超え」か「以下」かの2パターンなの！マジ興味深い！✨</p>
+
+          <div class="code code-python">
+# まずはライブラリ全部入れちゃお～！✨
+import pandas as pd  # パンダちゃん呼んできた！
+import numpy as np   # 計算お任せ！
+import matplotlib.pyplot as plt  # グラフ描くやつ！
+import seaborn as sns  # かわいいグラフにするやつ！
+
+# データ読み込んじゃうよ～！
+df = pd.read_csv('adult.data', header=None)
+df.head()  # ちょっと見てみる！
           </div>
-          <div class="formula-explanation">
-            aとbの値が近いほど調和平均は大きくなるの！これがF1-scoreの重要なポイント！
+
+          <div class="tip">
+            <h4>🌟 このデータがスゴイとこ！</h4>
+            <ul>
+              <li>全部で32,561件もあるの！マジ多い！</li>
+              <li>欠損値とかないからそのまま使えちゃう！ラッキー！✨</li>
+              <li>数値データと文字データがMIXしてて超おもしろい！</li>
+            </ul>
           </div>
         </div>
-  
-        <div class="tip">
-          <h4>🌟 調和平均の特徴</h4>
-          <ul>
-            <li>2つの値が離れてると小さくなる！</li>
-            <li>2つの値が近いと大きくなる！</li>
-            <li>バランスが大事な指標に最適！</li>
-          </ul>
+      </div>
+
+      <!-- 数値変数EDA -->
+      <div class="card">
+        <h2>📊 数値データをチェックしてみよ！</h2>
+        <div class="feature">
+          <p>数値データの特徴をガッツリ見ていくよ！特にfnlwgtとかcapital-gainとかcapital-lossは標準偏差が平均より大きくて、マジばらつきがヤバい！🤔</p>
+
+          <div class="code code-python">
+# 統計情報見てみよ！
+df.describe().T  # 転置しちゃう！見やすいでしょ？✨
+          </div>
+
+          <div class="success">
+            <h4>💝 チェックポイント！</h4>
+            <ul>
+              <li>年齢は平均38.6歳！みんな働き盛りって感じ！</li>
+              <li>education-numは平均10年くらい！結構勉強してる？</li>
+              <li>労働時間は週40時間が多いけど、中には99時間の人も！無理しないでね～💦</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  
-    <div class="card">
-      <h2>📊 評価指標の可視化！</h2>
-      <div class="feature">
-        <p>各評価指標の関係を見てみよう！</p>
-  
-        <div class="code code-python">
-  <span class="comment"># プロットのサイズを設定</span>
-  plt.figure(figsize=(10, 6))
-  
-  <span class="comment"># 各評価指標を計算</span>
-  metrics = {
-      <span class="string">'Accuracy'</span>: [ac_score],
-      <span class="string">'Precision'</span>: [pr_score],
-      <span class="string">'Recall'</span>: [rc_score],
-      <span class="string">'F1-score'</span>: [f1]
-  }
-  
-  <span class="comment"># バープロットで可視化</span>
-  plt.bar(metrics.keys(), [v[0] for v in metrics.values()])
-  plt.ylim(0, 1)  <span class="comment"># スケールを0-1に固定</span>
-  plt.title(<span class="string">'Evaluation Metrics Comparison'</span>)
-  plt.show()
-        </div>
-  
-        <div class="warning">
-          <h4>⚠️ 注意ポイント</h4>
-          <p>F1-scoreは必ずPrecisionとRecallの間の値になるの！だからバランスの指標として使えるんだよ！</p>
+
+      <!-- カテゴリ変数EDA -->
+      <div class="card">
+        <h2>🎯 文字データもバッチリ分析！</h2>
+        <div class="feature">
+          <p>今度は文字データを見ていくよ！uniqueでカテゴリの数、freqで一番多いやつがわかっちゃう！便利～！✨</p>
+
+          <div class="warning">
+            <h4>📢 見つけたポイント！</h4>
+            <ul>
+              <li>workclassは9種類あって、Privateが圧倒的人気！</li>
+              <li>educationは16種類もあるの！みんな色んな学歴持ってるね～！</li>
+              <li>native-countryは42カ国！でもほとんどアメリカ！USA！USA！</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  
-    <div class="card">
-      <h2>🎯 予測ラベル別の分析！</h2>
-      <div class="feature">
-        <h3>すべて1と予測するケース</h3>
-        <div class="code code-python">
-  <span class="comment"># すべて1のラベルを作成</span>
-  y_test_ones = np.ones(len(y_test))
-  
-  <span class="comment"># 評価指標を計算</span>
-  ac_score_ones = accuracy_score(y_test, y_test_ones)
-  pr_score_ones = precision_score(y_test, y_test_ones)
-  rc_score_ones = recall_score(y_test, y_test_ones)
-  f1_ones = f1_score(y_test, y_test_ones)
-  
-  <span class="comment"># 結果を表示</span>
-  print(<span class="string">f'Metrics for all 1s prediction:'</span>)
-  print(<span class="string">f'accuracy = {ac_score_ones:.2f}'</span>)
-  print(<span class="string">f'precision = {pr_score_ones:.2f}'</span>)
-  print(<span class="string">f'recall = {rc_score_ones:.2f}'</span>)
-  print(<span class="string">f'F1-score = {f1_ones:.2f}'</span>)
-        </div>
-  
-        <div class="tip">
-          <h4>💡 結果の解釈</h4>
-          <ul>
-            <li>Accuracyは低くなるはず！だって少数クラス予測だから！</li>
-            <li>Recallは1.0になる！だって全部1と予測してるから！</li>
-            <li>Precisionは実際のラベル1の割合と同じになる！</li>
-          </ul>
+
+      <!-- 前処理 -->
+      <div class="card">
+        <h2>✨ データの前処理しちゃお！</h2>
+        <div class="feature">
+          <p>分析した結果を元に、データをキレイにしていくよ！まずは余計なスペースを消して、アメリカのデータだけ使っちゃう！</p>
+
+          <div class="code code-python">
+# スペース消しちゃお！
+for s in cat_cols:
+    df[s] = df[s].str.replace(' ', '')  # バイバイ、スペース！👋
+
+# アメリカだけ抽出！
+df = df[df['native-country'].isin(['United-States'])]
+          </div>
         </div>
       </div>
-    </div>
-  
-    <div class="card">
-      <h2>📈 混同行列の比較</h2>
-      <div class="feature">
-        <p>予測パターン別の混同行列を見比べよう！</p>
-  
-        <div class="code code-python">
-  <span class="comment"># 2つの予測パターンの混同行列を並べて表示</span>
-  fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-  
-  <span class="comment"># すべて0の場合</span>
-  sns.heatmap(confusion_matrix(y_test, y_test_zeros), 
-      annot=True, fmt=<span class="string">'d'</span>, ax=ax1, cmap=<span class="string">'Blues'</span>)
-  ax1.set_title(<span class="string">'All Zeros Prediction'</span>)
-  
-  <span class="comment"># すべて1の場合</span>
-  sns.heatmap(confusion_matrix(y_test, y_test_ones),
-      annot=True, fmt=<span class="string">'d'</span>, ax=ax2, cmap=<span class="string">'Blues'</span>)
-  ax2.set_title(<span class="string">'All Ones Prediction'</span>)
-  
-  plt.tight_layout()
-  plt.show()
-        </div>
-  
-        <div class="success">
-          <h4>✨ 比較のポイント</h4>
-          <p>2つの極端なケースを比べることで、モデルの評価の仕方がよく分かるよ！どっちもいまいちなのは明らか！</p>
+
+      <!-- 評価指標 -->
+      <div class="card">
+        <h2>📈 予測の評価方法を決めよ！</h2>
+        <div class="feature">
+          <p>分類の予測って、どうやって評価すればいいの？って話だよ！混同行列（まぎらわしいよね～）を使って4つの指標を見ていくの！✨</p>
+
+          <div class="formula">
+            <div class="formula-main">
+              評価指標はこんな感じ！：
+              \[ Accuracy = \frac{TP + TN}{TP + TN + FP + FN} \]
+              \[ Precision = \frac{TP}{TP + FP} \]
+              \[ Recall = \frac{TP}{TP + FN} \]
+            </div>
+            <div class="formula-explanation">
+              <p>難しそうに見えるけど、要は「どれだけ当たってるか」を色んな角度から見てるだけだよ！✨</p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  
-    <div class="card">
-      <h2>🌈 まとめ</h2>
-      <div class="tip">
-        <h4>今回学んだこと！</h4>
-        <ul>
-          <li>F1-scoreは調和平均を使ってPrecisionとRecallのバランスを評価！</li>
-          <li>極端な予測（全部0か全部1）と比較することで、モデルの性能が分かりやすくなる！</li>
-          <li>不均衡データでは、複数の評価指標を組み合わせて判断するのが大事！</li>
-          <li>可視化を活用すると、結果の解釈が超分かりやすい！</li>
-        </ul>
+
+      <!-- 検証結果 -->
+      <div class="card">
+        <h2>🔍 予測結果を確認してみよう！</h2>
+        <div class="feature">
+          <p>全部0って予測した場合と、全部1って予測した場合を比べてみるよ！どっちがいいかな～？🤔</p>
+
+          <div class="tip">
+            <h4>💫 結果はこんな感じ！</h4>
+            <ul>
+              <li>全部0で予測しちゃうと：
+                <ul>
+                  <li>Accuracyは0.75！高そうに見えるけど...！</li>
+                  <li>PrecisionもRecallも0！これマジ無理！😱</li>
+                </ul>
+              </li>
+              <li>全部1で予測すると：
+                <ul>
+                  <li>Accuracyは0.25！うーん微妙！</li>
+                  <li>でもRecallは1.00！すごい？でもちょっと違う気が...！</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

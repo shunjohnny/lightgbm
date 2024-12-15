@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>3.4 検証データ評価でモデル精度アップ！✨</title>
+  <link href="../styles/styles.css" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>3.4 検証データ評価でモデル超パワーアップ！✨</h1>
+      <p>データの分け方と評価方法をマスターして、モデルの精度をぐんぐん上げちゃおう！💕</p>
+    </div>
+
+    <div class="content">
+      <!-- データ分割の基本 -->
+      <div class="card">
+        <h2>💖 データ分割の基本を理解しよう！</h2>
+        <div class="feature">
+          <p>今までは単純に学習データとテストデータに分けてたけど、それだとハイパーパラメータの調整ができないの！だから今回は3分割する方法を学んじゃうよ～！✨</p>
+
+          <div class="tip">
+            <h4>📚 3つのデータセットの役割</h4>
+            <ul>
+              <li>学習データ (train)：モデルの学習に使うよ！</li>
+              <li>検証データ (valid)：ハイパーパラメータの調整に使うの！</li>
+              <li>テストデータ (test)：最後の評価だけに使うよ！</li>
+            </ul>
+          </div>
+
+          <div class="code code-python">
+# データを3分割する方法だよ！
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_valid, y_train, y_valid = train_test_split(
+    X_train, y_train, test_size=0.2)
+          </div>
+        </div>
+      </div>
+
+      <!-- アーリーストッピング -->
+      <div class="card">
+        <h2>🎯 アーリーストッピングで過学習防止！</h2>
+        <div class="feature">
+          <p>いつまでも学習させすぎると過学習しちゃうから、ちょうどいいとこで止めるのがアーリーストッピング！賢い子でしょ？✨</p>
+
+          <div class="code code-python">
+# アーリーストッピングの実装方法
+model = lgb.train(
+    params,
+    lgb_train,
+    num_boost_round=500,
+    valid_sets=[lgb_train, lgb_eval],
+    callbacks=[lgb.early_stopping(10)]  # 10回改善なかったら止める！
+)
+          </div>
+
+          <div class="success">
+            <h4>💝 アーリーストッピングのメリット</h4>
+            <ul>
+              <li>過学習を防げる！</li>
+              <li>学習時間が短くなる！</li>
+              <li>自動で最適な学習回数を見つけてくれる！</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- クロスバリデーション -->
+      <div class="card">
+        <h2>🌈 クロスバリデーションでより正確な評価！</h2>
+        <div class="feature">
+          <p>データを5分割して、順番に検証データにしていくの！これで評価の信頼性がグッと上がるよ！✨</p>
+
+          <div class="code code-python">
+# クロスバリデーションの実装
+kf = StratifiedKFold(n_splits=5, shuffle=True)
+for fold, (tr_idx, va_idx) in enumerate(kf.split(X_train, y_train)):
+    # 各foldでモデルを作って評価するよ！
+    model = lgb.train(params,
+                     lgb_train,
+                     num_boost_round=500,
+                     valid_sets=[lgb_train, lgb_eval],
+                     callbacks=[lgb.early_stopping(10)])
+          </div>
+
+          <div class="warning">
+            <h4>⚠️ 注意ポイント！</h4>
+            <ul>
+              <li>計算時間がfold分だけ増えちゃうの！</li>
+              <li>でも、その分信頼性は上がるよ！</li>
+              <li>実務では計算環境のコストと相談して決めてね！</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 評価指標の比較 -->
+      <div class="card">
+        <h2>📊 評価結果を比較してみよう！</h2>
+        <div class="feature">
+          <p>実際にやってみた結果を見てみよう！どの方法がベストか比較しちゃお！✨</p>
+
+          <div class="success">
+            <h4>💫 結果まとめ</h4>
+            <ul>
+              <li>単純分割：accuracy = 0.86, F1-score = 0.68</li>
+              <li>クロスバリデーション：accuracy = 0.87, CV logloss = 0.284</li>
+              <li>結論：クロスバリデーションの方が信頼性高い！</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
