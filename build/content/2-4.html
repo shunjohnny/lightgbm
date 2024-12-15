@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>LightGBM超入門！予測力アップの秘訣✨</title>
+<link href="../styles/styles.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+    <style>
+    body {
+        font-family: system-ui, -apple-system, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        background: #f8fafc;
+        padding: 2rem;
+    }
+    .container {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative;
+    }
+    .sidebar-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        background: white;
+        border: 1px solid #e2e8f0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        z-index: 1001;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar-toggle:hover {
+        background: #f1f5f9;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar-toggle.active {
+        background: #f1f5f9;
+        transform: translateX(-250px);
+    }
+    .sidebar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100%;
+        background: #f1f5f9;
+        border-left: 1px solid #e2e8f0;
+        padding: 1rem;
+        padding-top: 4rem;
+        box-sizing: border-box;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .sidebar-content {
+        height: 100%;
+        overflow-y: auto;
+    }
+    .sidebar-item {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: #475569;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        border-radius: 0.375rem;
+        margin-bottom: 0.25rem;
+        font-size: 0.95rem;
+    }
+    .sidebar-item:hover {
+        background: white;
+        color: #1d4ed8;
+        transform: translateX(4px);
+    }
+    .back-button {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        height: 2.5rem;
+        padding: 0 1rem;
+        border-radius: 0.5rem;
+        background: white;
+        border: 1px solid #e2e8f0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+        z-index: 1001;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        color: #475569;
+        text-decoration: none;
+    }
+    .back-button:hover {
+        background: #f1f5f9;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        color: #1d4ed8;
+    }
+    .back-button span {
+        margin-right: 0.5rem;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>2.4 LightGBMで予測力アップデート！🚀</h1>
+<p>勾配ブースティングで予測精度マジアップ！SHAPで解釈もバッチリ！</p>
+</div>
+<div class="content">
+<div class="card">
+<h2>💫 勾配ブースティングってなに？</h2>
+<div class="feature">
+<p>複数の決定木をチームプレイさせて、予測精度をどんどん上げていく方法だよ！✨</p>
+<div class="formula">
+<div class="formula-main">
+            \[\hat{y} = \hat{y}^{(0)} + \sum_{k=1}^K w_k(\mathbf{x})\]
+          </div>
+<div class="formula-explanation">
+            予測値は初期値に、K個の木の予測値を足し合わせたものになるの！各木がちょっとずつ予測を良くしていくイメージ！
+          </div>
+</div>
+</div>
+<div class="tip">
+<h4>🌈 LightGBMのいいところ</h4>
+<ul>
+<li>予測精度が高い！複数の木が協力するから！</li>
+<li>学習が超速い！だから「Light」って名前がついてるの！</li>
+<li>大きなデータセットでも余裕で扱える！</li>
+</ul>
+</div>
+</div>
+<div class="card">
+<h2>🎯 実践編：Bostonハウスプライス予測</h2>
+<div class="feature">
+<h3>まずはデータの準備から！</h3>
+<div class="code code-python">
+<span class="comment"># 必要なライブラリをインポート！✨</span>
+<span class="keyword">import</span> <span class="builtin">lightgbm</span> <span class="keyword">as</span> lgb
+<span class="keyword">import</span> <span class="builtin">pandas</span> <span class="keyword">as</span> pd
+
+<span class="comment"># データセットを読み込むよ！</span>
+df = pd.read_csv(<span class="string">'housing.data'</span>)
+        </div>
+</div>
+<div class="success">
+<h4>💝 パラメータ設定のコツ！</h4>
+<p>ハイパーパラメータの設定でモデルの性能が変わるよ！</p>
+<div class="code code-python">
+params = {
+    <span class="string">'objective'</span>: <span class="string">'regression'</span>,  <span class="comment"># 回帰問題だよ！</span>
+<span class="string">'metric'</span>: <span class="string">'rmse'</span>,          <span class="comment"># 評価指標はRMSE！</span>
+<span class="string">'learning_rate'</span>: 0.1,    <span class="comment"># 学習率は0.1に設定</span>
+<span class="string">'num_leaves'</span>: 31,        <span class="comment"># 葉の数は31枚まで！</span>
+<span class="string">'min_data_in_leaf'</span>: 20,  <span class="comment"># 葉ごとの最小データ数</span>
+}
+        </div>
+</div>
+</div>
+<div class="card">
+<h2>✨ SHAPで予測の解釈力アップ！</h2>
+<div class="feature">
+<p>SHAPを使うと、予測がなぜそうなったのか超分かりやすく説明できるの！</p>
+<div class="code code-python">
+<span class="comment"># SHAPのインストール</span>
+!pip install shap
+
+<span class="comment"># SHAPで予測を解釈！</span>
+<span class="keyword">import</span> <span class="builtin">shap</span>
+explainer = shap.TreeExplainer(model)
+shap_values = explainer(X_test)
+        </div>
+</div>
+<div class="warning">
+<h4>⚠️ 気をつけポイント！</h4>
+<p>SHAPは計算に時間がかかることがあるから、小さなサンプルでまず試してみるのがおすすめ！</p>
+</div>
+</div>
+<div class="card">
+<h2>📊 可視化で理解を深めよう！</h2>
+<div class="feature">
+<h3>SHAP Waterfall Plotで予測の理由を解明！</h3>
+<div class="code code-python">
+<span class="comment"># 特定のデータポイントの予測を解釈</span>
+shap.plots.waterfall(shap_values[0])
+        </div>
+</div>
+<div class="success">
+<h4>💫 可視化のポイント</h4>
+<ul>
+<li>棒グラフの長さは特徴量の重要度を表してるよ！</li>
+<li>赤は正の影響、青は負の影響を示すの！</li>
+<li>上から順に影響が大きい順に並んでるよ！</li>
+</ul>
+</div>
+</div>
+</div>
+
+<a class="back-button" href="../index.html">
+<span>←</span> インデックス
+    </a>
+
+<button class="sidebar-toggle" id="sidebarToggle">
+<span>📑</span>
+</button>
+<div class="sidebar" id="sidebar">
+<nav class="sidebar-content">
+<a class="sidebar-item" href="1-1.html">1.1 予測モデル入門！✨</a>
+<a class="sidebar-item" href="1-2.html">1.2 機械学習アルゴリズムをマスターしよう！🎮</a>
+<a class="sidebar-item" href="1-3.html">1.3 環境構築やってみよ～！🌈</a>
+<a class="sidebar-item" href="2-1.html">2-1 データ分析のディープな世界へようこそ！🌟</a>
+<a class="sidebar-item" href="2-2.html">2.2 線形回帰をマスターしちゃお！🌈</a>
+<a class="sidebar-item" href="2-3.html">2.3 回帰木で予測力アップデート！🌟</a>
+<a class="sidebar-item" href="2-4.html">2.4 LightGBMで予測力アップデート！🚀</a>
+<a class="sidebar-item" href="3-1.html">3.1 データ理解してみよう！🌈</a>
+</nav>
+</div>
+<script>
+        document.getElementById("sidebarToggle").addEventListener("click", function() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("open");
+            this.classList.toggle("active");
+        });
+    </script>
+</div>
+<div class="container">
+<div class="card">
+<h2>🌟 モデルの学習を始めよう！</h2>
+<div class="feature">
+<p>まずはデータを学習用とテスト用に分けるよ！8:2の黄金比だよ！✨</p>
+<div class="code code-python">
+<span class="comment"># データ準備</span>
+  X_train, X_test, y_train, y_test = train_test_split(X, y, 
+      test_size=0.2, random_state=42)
+  
+  <span class="comment"># LightGBM用のデータセット作成</span>
+  lgb_train = lgb.Dataset(X_train, y_train)
+  lgb_eval = lgb.Dataset(X_test, y_test, reference=lgb_train)
+        </div>
+<div class="tip">
+<h4>💡 データセット作成のコツ</h4>
+<p>referenceを指定すると、学習データと同じ前処理が評価データにも適用されるの！これ超重要！</p>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>🎮 学習のパラメータ設定！</h2>
+<div class="feature">
+<p>ハイパーパラメータの設定でモデルの性能が変わるよ！</p>
+<div class="code code-python">
+  params = {
+      <span class="string">'objective'</span>: <span class="string">'regression'</span>,     
+      <span class="string">'metric'</span>: <span class="string">'rmse'</span>,            
+      <span class="string">'learning_rate'</span>: 0.8,       <span class="comment"># 学習率高めに設定！</span>
+<span class="string">'num_leaves'</span>: 5,            <span class="comment"># 葉の数は控えめに</span>
+<span class="string">'min_data_in_leaf'</span>: 1,      <span class="comment"># 最小データ数</span>
+<span class="string">'max_bin'</span>: 100              <span class="comment"># ヒストグラムのbin数</span>
+  }
+        </div>
+<div class="warning">
+<h4>⚠️ パラメータ調整の注意点</h4>
+<ul>
+<li>learning_rateは小さいと学習が遅いけど安定するよ！</li>
+<li>num_leavesを大きくしすぎると過学習の危険が！</li>
+<li>min_data_in_leafは過学習防止に重要！</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>🏃‍♀️ モデルを学習させよう！</h2>
+<div class="feature">
+<p>いよいよ学習開始！途中経過も見ながら進めるよ！</p>
+<div class="code code-python">
+<span class="comment"># モデルの学習スタート！</span>
+  model = lgb.train(params,
+      lgb_train,
+      num_boost_round=50,           <span class="comment"># ブースティングの回数</span>
+      valid_sets=[lgb_train],       <span class="comment"># 評価用データセット</span>
+      valid_names=[<span class="string">'train'</span>],     <span class="comment"># データセットの名前</span>
+      callbacks=[lgb.log_evaluation(10)])  <span class="comment"># 10回ごとにログを出力</span>
+</div>
+<div class="success">
+<h4>✨ 学習のポイント</h4>
+<p>num_boost_roundは多いほど精度が上がるけど、過学習にも注意！</p>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>📊 予測と評価をしてみよう！</h2>
+<div class="feature">
+<h3>予測してRMSEで評価！</h3>
+<div class="code code-python">
+<span class="comment"># 予測実行</span>
+  y_pred = model.predict(X_test)
+  
+  <span class="comment"># RMSEで評価</span>
+  rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+  print(f<span class="string">'RMSE: {rmse:.2f}'</span>)
+        </div>
+</div>
+<div class="tip">
+<h4>💫 予測結果の解釈のコツ</h4>
+<ul>
+<li>RMSEは小さいほど予測が当たってる！</li>
+<li>実際の値との差を見て、傾向を把握しよう！</li>
+<li>外れ値にも注目！モデルの限界を知るのに重要！</li>
+</ul>
+</div>
+</div>
+<div class="card">
+<h2>🔍 特徴量の重要度を確認！</h2>
+<div class="feature">
+<p>どの特徴量が予測に効いているか見てみよう！</p>
+<div class="code code-python">
+<span class="comment"># 特徴量の重要度を可視化</span>
+  importance = pd.DataFrame({
+      <span class="string">'feature'</span>: X.columns,
+      <span class="string">'importance'</span>: model.feature_importance(<span class="string">'gain'</span>)
+  })
+  importance = importance.sort_values(<span class="string">'importance'</span>, ascending=False)
+  
+  <span class="comment"># プロット作成</span>
+  plt.figure(figsize=(10, 6))
+  plt.bar(importance[<span class="string">'feature'</span>], importance[<span class="string">'importance'</span>])
+  plt.xticks(rotation=45)
+  plt.title(<span class="string">'Feature Importance (Gain)'</span>)
+  plt.show()
+        </div>
+</div>
+<div class="success">
+<h4>📈 可視化のポイント</h4>
+<ul>
+<li>gainは特徴量がどれだけ損失を減らしたかを表すよ！</li>
+<li>上位の特徴量に注目して、モデルの判断基準を理解しよう！</li>
+<li>重要度の低い特徴量は除外を検討してもいいかも！</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

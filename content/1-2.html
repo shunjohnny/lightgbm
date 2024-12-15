@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<title>機械学習アルゴリズム徹底解説！✨</title>
+<link href="../styles/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>1.2 機械学習アルゴリズムをマスターしよう！🎮</h1>
+    <p>超詳しく解説していくから、しっかりチェックしてね！</p>
+  </div>
+
+  <div class="content">
+    <div class="card">
+      <h2>🌟 アルゴリズムの基本ポイント</h2>
+      <div class="feature">
+        <h3>機械学習の3大タスク</h3>
+        <p>大きく分けて3つあるの！</p>
+        <ul>
+          <li>回帰：数値を予測！（例：売上予測、株価予測）</li>
+          <li>分類：カテゴリを予測！（例：スパム判定、画像認識）</li>
+          <li>クラスタリング：グループ分け！（例：顧客セグメンテーション）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📊 線形回帰の詳細</h2>
+      
+      <div class="feature">
+        <h3>線形回帰の数式</h3>
+        <div class="formula">
+          <div class="formula-main">
+            予測値 = w₀ + w₁x₁ + w₂x₂ + ... + wₙxₙ
+          </div>
+          <div class="formula-explanation">
+            <div class="formula-variables">
+              <div class="formula-variable">w₀</div><div class="formula-description">バイアス項</div>
+              <div class="formula-variable">w₁~wₙ</div><div class="formula-description">重み</div>
+              <div class="formula-variable">x₁~xₙ</div><div class="formula-description">特徴量</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <h3>正則化付き線形回帰</h3>
+        <ul>
+          <li>Ridge回帰：L2正則化で過学習を防ぐ</li>
+          <li>Lasso回帰：L1正則化で特徴量を選択</li>
+          <li>Elastic Net：L1とL2両方使う！</li>
+        </ul>
+      </div>
+
+      <div class="warning">
+        <h4>線形回帰の注意点</h4>
+        <ul>
+          <li>外れ値に弱い！</li>
+          <li>特徴量間の相関が強いとダメ！</li>
+          <li>非線形な関係は表現できない！</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🌳 決定木アルゴリズム詳説</h2>
+      
+      <div class="feature">
+        <h3>決定木の仕組み</h3>
+        <p>木構造を使ってデータを分割していくの！</p>
+        <ul>
+          <li>ノード：条件分岐のポイント</li>
+          <li>リーフ：最終的な予測値</li>
+          <li>分岐基準：不純度（ジニ係数/エントロピー）を減らす！</li>
+        </ul>
+      </div>
+
+      <div class="success">
+        <h4>決定木のメリット</h4>
+        <ul>
+          <li>理解しやすい！</li>
+          <li>前処理少なくても大丈夫！</li>
+          <li>非線形な関係も表現できる！</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🚀 アンサンブル学習の種類</h2>
+
+      <div class="feature">
+        <h3>バギング（Bagging）</h3>
+        <p>データをランダムサンプリングして並列学習！</p>
+        <ul>
+          <li>ランダムフォレスト：代表的な手法</li>
+          <li>特徴量もランダムに選ぶ</li>
+          <li>過学習しにくい！</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>ブースティング（Boosting）</h3>
+        <p>逐次的に学習して、弱点を補強！</p>
+        <ul>
+          <li>勾配ブースティング：残差を学習</li>
+          <li>AdaBoost：誤分類データの重みを上げる</li>
+          <li>精度は高いけど、過学習しやすい</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📚 ライブラリ詳細解説</h2>
+
+      <div class="feature">
+        <h3>scikit-learn</h3>
+        <div class="code code-python">
+from sklearn.ensemble import GradientBoostingRegressor
+
+model = GradientBoostingRegressor(
+    n_estimators=100,  # 木の数
+    learning_rate=0.1, # 学習率
+    max_depth=3        # 木の深さ
+)
+        </div>
+      </div>
+
+      <div class="feature">
+        <h3>LightGBM</h3>
+        <div class="code code-python">
+import lightgbm as lgb
+
+model = lgb.LGBMRegressor(
+    objective='regression',
+    num_leaves=31,
+    learning_rate=0.1,
+    n_estimators=100
+)
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💡 ハイパーパラメータ調整のコツ</h2>
+      
+      <table>
+        <tr>
+          <th>パラメータ</th>
+          <th>意味</th>
+          <th>調整のコツ</th>
+        </tr>
+        <tr>
+          <td>learning_rate</td>
+          <td>学習率</td>
+          <td>小さいほど安定するけど時間かかる</td>
+        </tr>
+        <tr>
+          <td>n_estimators</td>
+          <td>木の数</td>
+          <td>多いほど複雑なパターンが学習できる</td>
+        </tr>
+        <tr>
+          <td>max_depth</td>
+          <td>木の深さ</td>
+          <td>深いほど過学習しやすい</td>
+        </tr>
+      </table>
+
+      <div class="tip">
+        <h4>調整の基本戦略</h4>
+        <ol>
+          <li>learning_rateを小さめに固定（0.01-0.1）</li>
+          <li>max_depthを調整（3-10程度）</li>
+          <li>n_estimatorsを増やして様子見</li>
+          <li>early_stoppingでオーバーフィット防止</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔍 モデル評価指標</h2>
+
+      <div class="feature">
+        <h3>回帰タスクの評価指標</h3>
+        <ul>
+          <li>MAE：平均絶対誤差</li>
+          <li>MSE：平均二乗誤差</li>
+          <li>RMSE：二乗平均平方根誤差</li>
+          <li>R2：決定係数</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>分類タスクの評価指標</h3>
+        <ul>
+          <li>Accuracy：正解率</li>
+          <li>Precision：適合率</li>
+          <li>Recall：再現率</li>
+          <li>F1-score：PrecisionとRecallの調和平均</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <button class="sidebar-toggle" id="sidebarToggle">
+    <span>📑</span>
+  </button>
+  
+  <div class="sidebar" id="sidebar">
+    <nav class="sidebar-content">
+      <a class="sidebar-item" href="1-2.html">機械学習アルゴリズム</a>
+    </nav>
+  </div>
+</div>
+
+<script>
+    document.getElementById("sidebarToggle")?.addEventListener("click", function() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar?.classList.toggle("open");
+        this.classList.toggle("active");
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>決定木でマジ楽しく予測しちゃお！✨</title>
+<link href="../styles/styles.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>2.3 回帰木で予測力アップデート！🌟</h1>
+    <p>線形回帰とはちょっと違う、新しい予測の仲間を紹介するよ！</p>
+  </div>
+
+  <div class="content">
+    <div class="card">
+      <h2>💫 決定木ってなにそれ？超簡単解説！</h2>
+      <div class="feature">
+        <p>決定木は予測するときに「イエス・ノー」で分けていく感じ！木の枝分かれみたいでしょ？だからツリーって呼ばれてるの！✨</p>
+        
+        <div class="tip">
+          <h4>🌈 決定木のいいところ</h4>
+          <ul>
+            <li>マジ見やすい！なんで予測したのかすぐ分かる！</li>
+            <li>数値じゃなくてもOK！カテゴリーデータもイケる！</li>
+            <li>複雑な関係性も見つけられちゃう！</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🎯 予測の仕組みを解説！</h2>
+      <div class="feature">
+        <p>線形回帰と違って、決定木は特徴量をグループ分けして予測するの！例えば、こんな感じ：</p>
+        
+        <div class="code code-python">
+<span class="comment"># 決定木の予測モデルを作るよ！</span>
+<span class="keyword">from</span> <span class="builtin">sklearn.tree</span> <span class="keyword">import</span> DecisionTreeRegressor
+
+<span class="comment"># インスタンス作成！ハイパーパラメータも設定できる✨</span>
+model = DecisionTreeRegressor(
+    max_depth=2,  <span class="comment"># 木の深さはどれくらい？</span>
+    min_samples_leaf=1  <span class="comment"># 葉っぱの最小サンプル数は？</span>
+)
+        </div>
+      </div>
+
+      <div class="warning">
+        <h4>😊 気をつけポイント！</h4>
+        <p>深さを増やしすぎると過学習しちゃうから要注意！ちょうどいいバランスを見つけるのがコツだよ！</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📊 実践編：ボストンの家賃予測にチャレンジ！</h2>
+      <div class="feature">
+        <h3>まずはデータの準備からね！</h3>
+        <div class="code code-python">
+<span class="comment"># 必要なライブラリを呼び出すよ！</span>
+<span class="keyword">import</span> <span class="builtin">pandas</span> <span class="keyword">as</span> pd
+<span class="keyword">import</span> <span class="builtin">numpy</span> <span class="keyword">as</span> np
+<span class="keyword">from</span> <span class="builtin">sklearn.model_selection</span> <span class="keyword">import</span> train_test_split
+
+<span class="comment"># データを読み込むよ！</span>
+df = pd.read_csv(<span class="string">'housing.data'</span>, header=None)
+        </div>
+      </div>
+
+      <div class="success">
+        <h4>💡 データの分け方のコツ</h4>
+        <p>学習データとテストデータは8:2で分けるのがベスト！これ鉄板！</p>
+        <div class="code code-python">
+X_train, X_test, y_train, y_test = train_test_split(X, y, 
+    test_size=0.2, random_state=42)
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔥 決定木の学習と評価</h2>
+      <div class="feature">
+        <h3>SSE（二乗誤差）の計算方法</h3>
+        <div class="formula">
+          <div class="formula-main">
+            \[SSE = \sum_{j=1}^T \sum_{i \in R_j} (y_i - \hat{y}_{R_j})^2\]
+          </div>
+          <div class="formula-explanation">
+            これは各グループの予測値と実際の値の差を二乗して足し合わせたものだよ！小さいほど良いんだよ！
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <h4>✨ 評価のポイント</h4>
+        <ul>
+          <li>RMSEが小さいほど予測が当たってる！</li>
+          <li>過学習してないかチェックも忘れずに！</li>
+          <li>特徴量の重要度も見てみるとGood！</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>🎨 可視化で理解を深めよう！</h2>
+      <div class="feature">
+        <h3>graphvizで決定木を描いてみる！</h3>
+        <div class="code code-python">
+<span class="keyword">from</span> <span class="builtin">sklearn.tree</span> <span class="keyword">import</span> export_graphviz
+<span class="keyword">import</span> <span class="builtin">graphviz</span>
+
+dot_data = export_graphviz(model, 
+    feature_names=X.columns,
+    filled=True)
+graph = graphviz.Source(dot_data)
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+    <div class="card">
+      <h2>🌈 深さ1の決定木をマスターしちゃお！</h2>
+      <div class="feature">
+        <p>まずは一番シンプルな深さ1の決定木から始めるよ！これが分かれば応用も簡単！✨</p>
+        
+        <div class="code code-python">
+  <span class="comment"># まずは必要なものを準備！</span>
+  <span class="keyword">from</span> <span class="builtin">sklearn.tree</span> <span class="keyword">import</span> DecisionTreeRegressor
+  <span class="keyword">import</span> <span class="builtin">pandas</span> <span class="keyword">as</span> pd
+  
+  <span class="comment"># 深さ1の決定木を作るよ！</span>
+  model = DecisionTreeRegressor(max_depth=1)
+        </div>
+  
+        <div class="tip">
+          <h4>💡 なんで深さ1からスタート？</h4>
+          <ul>
+            <li>基本の動きが超分かりやすい！</li>
+            <li>過学習の心配がほぼなし！</li>
+            <li>可視化も見やすい！</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card">
+      <h2>🎨 決定木の可視化をマスター！</h2>
+      <div class="feature">
+        <p>graphvizを使って決定木を可愛く可視化しちゃお！🎨</p>
+        
+        <div class="code code-python">
+  <span class="comment"># 可視化用のコードだよ！</span>
+  dot_data = tree.export_graphviz(model, out_file=None,
+      feature_names=['RM'],  <span class="comment"># 特徴量の名前</span>
+      filled=True,  <span class="comment"># 色付きにする！</span>
+      rounded=True)  <span class="comment"># 角を丸くする！</span>
+  
+  <span class="comment"># PNGで出力！</span>
+  graph = graphviz.Source(dot_data)
+        </div>
+  
+        <div class="success">
+          <h4>✨ 可視化のポイント</h4>
+          <p>色が濃いほど予測値が高いよ！薄いほど低いの！直感的で分かりやすいでしょ？💕</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card">
+      <h2>📈 深さ2以上の木にチャレンジ！</h2>
+      <div class="feature">
+        <p>もっとパワーアップ！深い木を作って予測精度を上げちゃおう！</p>
+  
+        <div class="code code-python">
+  <span class="comment"># depth=2の決定木を作るよ！</span>
+  model_depth2 = DecisionTreeRegressor(
+      max_depth=2,
+      min_samples_leaf=10  <span class="comment"># 葉の最小サンプル数を指定</span>
+  )
+        </div>
+  
+        <div class="warning">
+          <h4>⚠️ 気をつけポイント</h4>
+          <p>深くすると予測は細かくなるけど、過学習には要注意だよ！バランスが大事！✨</p>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card">
+      <h2>💪 正則化でパワーアップ！</h2>
+      <div class="feature">
+        <p>過学習を防ぐために正則化を使っちゃお！これで予測力アップ！🚀</p>
+  
+        <div class="formula">
+          <div class="formula-main">
+            \[SSE_{reg} = \sum_{j=1}^T \sum_{i \in R_j} (y_i - \hat{y}_{R_j})^2 + \alpha T\]
+          </div>
+          <div class="formula-explanation">
+            αTは正則化項だよ！これで木が大きくなりすぎるのを防いでくれるの！
+          </div>
+        </div>
+  
+        <div class="code code-python">
+  <span class="comment"># 正則化パラメータを指定した決定木</span>
+  model_reg = DecisionTreeRegressor(
+      max_depth=4,
+      ccp_alpha=5  <span class="comment"># これが正則化の強さ！</span>
+  )
+        </div>
+      </div>
+  
+      <div class="tip">
+        <h4>💝 正則化のベストな使い方</h4>
+        <ul>
+          <li>αは小さい値から試してみるのがおすすめ！</li>
+          <li>交差検証と組み合わせるともっと良い感じ！</li>
+          <li>データの量に応じて調整するとGood！</li>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="card">
+      <h2>📊 特徴量の重要度チェック！</h2>
+      <div class="feature">
+        <p>どの特徴量が予測に効いてるか見てみよう！</p>
+  
+        <div class="code code-python">
+  <span class="comment"># 特徴量の重要度を可視化！</span>
+  importances = model.feature_importances_
+  plt.figure(figsize=(10, 6))
+  plt.bar(range(len(importances)), importances)
+  plt.title('Feature Importances 💫')
+        </div>
+      </div>
+  
+      <div class="success">
+        <h4>💅 可視化のおしゃれポイント</h4>
+        <ul>
+          <li>棒グラフの色を可愛くすると見やすい！</li>
+          <li>タイトルや軸ラベルも工夫すると◎</li>
+          <li>サイズ調整で見やすさUP！</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

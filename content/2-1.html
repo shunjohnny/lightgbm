@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>データ分析マスター講座✨</title>
+    <link href="../styles/styles.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>2-1 データ分析のディープな世界へようこそ！🌟</h1>
+        <p>バリ詳しく解説していくよ！見逃さないでね！</p>
+    </div>
+    <div class="content">
+        <div class="card">
+            <h2>🔍 2変数の関係性を見てみよう！</h2>
+            <div class="feature">
+                <h3>相関係数の計算方法</h3>
+                <p>相関係数マジ大事！-1から1の間の値をとるんだよ！</p>
+                
+                <div class="formula">
+                    $$r = \frac{\sum{(x - \bar{x})(y - \bar{y})}}{\sqrt{\sum{(x - \bar{x})^2} \sum{(y - \bar{y})^2}}}$$
+                </div>
+
+                <div class="code code-python">
+# Pythonでの計算方法
+correlation = df['MEDV'].corr(df['RM'])
+                </div>
+            </div>
+            <div class="tip">
+                <h4>相関係数の見方！</h4>
+                <ul>
+                    <li>1に近い：超正の相関！（一緒に増える）</li>
+                    <li>-1に近い：超負の相関！（片方増えると片方減る）</li>
+                    <li>0に近い：ほぼ無関係！</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📊 評価指標を詳しく解説！</h2>
+            
+            <div class="feature">
+                <h3>MSE (Mean Squared Error)</h3>
+                <div class="formula">
+                    $$MSE = \frac{\sum{(y_i - \hat{y}_i)^2}}{n}$$
+                </div>
+                <div class="code code-python">
+# 具体例で考えてみよう！
+# 実際の値: 100, 予測値: 110 → 誤差: 10
+# MSE = 10² = 100
+                </div>
+                <p>二乗するから外れ値にめっちゃ厳しいの！</p>
+            </div>
+
+            <div class="feature">
+                <h3>RMSE (Root Mean Squared Error)</h3>
+                <div class="formula">
+                    $$RMSE = \sqrt{\frac{\sum{(y_i - \hat{y}_i)^2}}{n}}$$
+                </div>
+                <div class="code code-python">
+# さっきの例だと
+# RMSE = √100 = 10
+# 元の単位に戻るから分かりやすい！
+                </div>
+            </div>
+
+            <div class="feature">
+                <h3>MAE (Mean Absolute Error)</h3>
+                <div class="formula">
+                    $$MAE = \frac{\sum{|y_i - \hat{y}_i|}}{n}$$
+                </div>
+                <div class="code code-python">
+# 例で見ると誤差10の場合
+# MAE = |10| = 10
+# 外れ値があっても比較的影響小さい！
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📈 正規分布について</h2>
+            <div class="feature">
+                <h3>標準偏差の意味</h3>
+                <p>データのバラつき具合を表すよ！</p>
+
+                <div class="formula">
+                    $$\sigma = \sqrt{\frac{\sum{(x_i - \mu)^2}}{n}}$$
+                </div>
+
+                <div class="code code-python">
+# μ（平均） = 22.53
+# σ（標準偏差） = 9.19
+# 約68%が μ ± σ (22.53 ± 9.19) 内に分布
+# 約95%が μ ± 2σ (22.53 ± 18.38) 内に分布
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🎯 判定係数（R²）の詳細</h2>
+            <div class="feature">
+                <h3>計算方法</h3>
+                <div class="formula">
+                    $$R^2 = 1 - \frac{\sum{(y_i - \hat{y}_i)^2}}{\sum{(y_i - \bar{y})^2}}$$
+                </div>
+
+                <div class="code code-python">
+# R²=1.0 → 完全予測
+# R²=0.0 → 当てずっぽうレベル
+# R²<0 → 平均値予測以下...
+                </div>
+            </div>
+            <div class="warning">
+                <h4>注意点！</h4>
+                <p>R²だけだと罠にハマることも！他の指標とも組み合わせて評価しようね！</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

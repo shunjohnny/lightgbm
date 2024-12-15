@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>線形回帰マジ楽しい解説✨</title>
+<link href="../styles/styles.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>2.2 線形回帰をマスターしちゃお！🌈</h1>
+    <p>予測の基本だよ！一緒に楽しく学んでいこう！</p>
+  </div>
+
+  <div class="content">
+    <div class="card">
+      <h2>✨ 基礎知識のおさらい</h2>
+      <div class="feature">
+        <p>線形回帰は超便利なアルゴリズムなの！特徴量から予測値を計算できちゃうんだよ！まずは単回帰から見ていこう！✨</p>
+        
+        <div class="formula">
+          <div class="formula-main">
+            \[\hat{y} = w_0 + w_1x\]
+          </div>
+          <div class="formula-variables">
+            <span class="formula-variable">x</span>: 特徴量（入力値）だよ！<br>
+            <span class="formula-variable">w₀</span>: 切片！グラフの始点になるよ！<br>
+            <span class="formula-variable">w₁</span>: 傾き！どのくらい変化するかを表すよ！
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🌟 学習の流れをチェック！</h2>
+      <div class="feature">
+        <p>学習データは \(n\) 個のレコードがあるの！それぞれインデックス \(i\) (1≤i≤n) で管理するよ！</p>
+        
+        <div class="formula">
+          <div class="formula-main">
+            \[l(y_i, \hat{y_i}) = \frac{1}{2}(y_i - \hat{y_i})^2\]
+          </div>
+          <div class="formula-explanation">
+            これは二乗誤差！予測値と実際の値の差を二乗したものだよ！小さければ小さいほどいい感じ♪
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <h4>😊 ワンポイントアドバイス</h4>
+        <p>二乗誤差は残差平方和（RSS: Residual Sum of Squares）とも呼ばれるんだよ！覚えておくと便利！</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💻 実際にやってみよう！</h2>
+      <div class="feature">
+        <h3>必要なライブラリを準備！</h3>
+        <div class="code code-python">
+<span class="comment"># まずはライブラリをインポート！</span>
+<span class="keyword">import</span> <span class="builtin">pandas</span> <span class="keyword">as</span> <span class="variable">pd</span>
+<span class="keyword">import</span> <span class="builtin">numpy</span> <span class="keyword">as</span> <span class="variable">np</span>
+<span class="keyword">import</span> <span class="builtin">matplotlib.pyplot</span> <span class="keyword">as</span> <span class="variable">plt</span>
+<span class="keyword">from</span> <span class="builtin">sklearn.linear_model</span> <span class="keyword">import</span> <span class="variable">LinearRegression</span>
+<span class="keyword">from</span> <span class="builtin">sklearn.metrics</span> <span class="keyword">import</span> <span class="variable">mean_squared_error</span>
+        </div>
+      </div>
+
+      <div class="success">
+        <h4>🎉 できることリスト</h4>
+        <ul>
+          <li>データの可視化がバッチリ！</li>
+          <li>予測モデルが簡単に作れる！</li>
+          <li>精度の評価もカンタン！</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+    <div class="card">
+      <h2>🎯 重回帰のアルゴリズムを攻略！</h2>
+      <div class="feature">
+        <p>単回帰より更にパワーアップ！複数の特徴量を使って予測値を出せちゃうの！🚀</p>
+        
+        <div class="formula">
+          <div class="formula-main">
+            \[\hat{y} = w_0 + \sum_{j=1}^m w_jx_j\]
+          </div>
+          <div class="formula-variables">
+            <span class="formula-variable">m</span>: 特徴量の数だよ！<br>
+            <span class="formula-variable">w_j</span>: それぞれの特徴量の重み！<br>
+            <span class="formula-variable">x_j</span>: j番目の特徴量の値！
+          </div>
+        </div>
+      </div>
+  
+      <div class="feature">
+        <h3>🔥 行列で表現するとこんな感じ！</h3>
+        <div class="formula">
+          <div class="formula-main">
+            \[\hat{y} = w_0 + \mathbf{w}^T\mathbf{x}\]
+          </div>
+          <div class="formula-explanation">
+            ここで \(\mathbf{w}\) と \(\mathbf{x}\) はベクトルなの！すごく便利だよね！✨
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="card">
+      <h2>📊 実践編：Bostonハウスプライス予測！</h2>
+      <div class="feature">
+        <h3>データの準備から始めよう！</h3>
+        <div class="code code-python">
+  <span class="comment"># データを読み込むよ！</span>
+  df = pd.read_csv(<span class="string">'https://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data'</span>, 
+      header=None, sep=<span class="string">'\s+'</span>)
+  <span class="comment"># 特徴量を設定！MEDVは目的変数だよ！</span>
+  X = df.drop(['MEDV'], axis=1)
+  y = df['MEDV']
+        </div>
+      </div>
+  
+      <div class="tip">
+        <h4>💡 データの分割が超重要！</h4>
+        <p>学習データとテストデータは8:2で分けるのがおすすめ！この比率がベストバランス！</p>
+        <div class="code code-python">
+  X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, 
+      shuffle=True, random_state=0)
+        </div>
+      </div>
+    </div>
+  
+    <div class="card">
+      <h2>✨ 特徴量の標準化でパワーアップ！</h2>
+      <div class="feature">
+        <p>特徴量のスケールを揃えることで、予測精度がグッとアップ！✨</p>
+        <div class="formula">
+          <div class="formula-main">
+            \[x_{std} = \frac{x - \mu}{\sigma}\]
+          </div>
+          <div class="formula-explanation">
+            平均を0、標準偏差を1に変換するよ！これで特徴量の重要度が比較しやすくなるの！
+          </div>
+        </div>
+        
+        <div class="code code-python">
+  <span class="comment"># StandardScalerでラクラク標準化！</span>
+  <span class="keyword">from</span> <span class="builtin">sklearn.preprocessing</span> <span class="keyword">import</span> StandardScaler
+  scaler = StandardScaler()
+  X_train_scaled = scaler.fit_transform(X_train)
+  X_test_scaled = scaler.transform(X_test)
+        </div>
+      </div>
+  
+      <div class="warning">
+        <h4>⚠️ 注意ポイント！</h4>
+        <p>テストデータは学習データで計算した平均と標準偏差で標準化するの！ここ間違えやすいから気をつけてね！</p>
+      </div>
+    </div>
+  
+    <div class="card">
+      <h2>📈 予測値の解釈方法</h2>
+      <div class="feature">
+        <p>予測結果をグラフで可視化すると超分かりやすい！</p>
+        <div class="code code-python">
+  <span class="comment"># 回帰係数を可視化！</span>
+  importances = model.coef_
+  indices = np.argsort(importances)[::-1]
+  plt.figure(figsize=(8, 4))
+  plt.bar(range(X.shape[1]), importances[indices])
+  plt.xticks(range(X.shape[1]), X.columns[indices], rotation=90)
+  plt.show()
+        </div>
+      </div>
+  
+      <div class="success">
+        <h4>🌟 解釈のコツ！</h4>
+        <ul>
+          <li>プラスの係数：その特徴量が大きいほど予測値も大きくなる！</li>
+          <li>マイナスの係数：その特徴量が大きいほど予測値は小さくなる！</li>
+          <li>係数の絶対値が大きいほど、その特徴量の影響力が強いってこと！</li>
+        </ul>
+      </div>
+    </div>
+  
+    <div class="card">
+      <h2>📝 評価指標でチェック！</h2>
+      <div class="feature">
+        <p>RMSEで予測の精度を確認！小さければ小さいほどGood！✨</p>
+        <div class="code code-python">
+  rmse = np.sqrt(mean_squared_error(y_test, y_test_pred))
+  print(<span class="string">f'RMSE test: {rmse:.2f}'</span>)
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

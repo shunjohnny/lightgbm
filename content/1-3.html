@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>環境構築マジ楽勝ガイド✨</title>
+<link href="../styles/styles.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>1.3 環境構築やってみよ～！🌈</h1>
+    <p>超簡単！Colaboratoryで機械学習始めちゃお！</p>
+  </div>
+
+  <div class="content">
+    <div class="card">
+      <h2>🎁 サンプルコードをゲットしよう！</h2>
+      <div class="feature">
+        <h3>まずはコードをダウンロード！</h3>
+        <p>このサンプルコードはマジ使える！lightgbm 3.3.5バージョンで作られてるの！</p>
+        
+        <div class="code code-shell">
+<span class="comment"># ここからダウンロードできるよ～！</span>
+<span class="command">https://www.shuwasystem.co.jp/support/7980html/6761.html</span>
+
+<span class="comment"># ダウンロードしたら↓の名前に変更してね！</span>
+<span class="command">lightgbm_sample</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>✨ Colaboratoryってなにそれ？</h2>
+      <div class="feature">
+        <p>超便利なツールなの！Googleが作った機械学習用の環境だよ！マジでいいことだらけ！：</p>
+        <ul>
+          <li>環境構築とかマジ不要！すぐ始められる！</li>
+          <li>クラウドで動くから重たい処理もラクラク！</li>
+          <li>よく使うライブラリ全部入り！
+            <ul>
+              <li>pandas: データ分析の超便利ツール！</li>
+              <li>numpy: 計算がめっちゃ速い！</li>
+              <li>matplotlib: グラフ作れる！</li>
+              <li>scikit-learn: 機械学習の定番！</li>
+              <li>lightgbm: 予測モデルが爆速で作れる！</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tip">
+        <h4>超重要ポイント！</h4>
+        <p>Googleアカウント持ってないとダメ！まだの人は急いで作っちゃお！💕</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔥 環境構築の手順を詳しく解説！</h2>
+      
+      <div class="feature">
+        <h3>Step1: アクセス方法</h3>
+        <div class="code code-shell">
+<span class="comment"># まずはここにアクセス！</span>
+<span class="command">https://colab.research.google.com/</span>
+
+<span class="comment"># Chromeブラウザがオススメ！他のブラウザだとたま～に動かないことあるよ！</span>
+        </div>
+      </div>
+
+      <div class="feature">
+        <h3>Step2: サンプルコードの準備</h3>
+        <p>超簡単な手順だよ！</p>
+        <ol>
+          <li>「ドライブにコピー」ボタンをポチッと押す✨</li>
+          <li>自動で「Colab Notebooks」ってフォルダができる！</li>
+          <li>「lightgbm_sample」フォルダを投げ込むだけ！</li>
+        </ol>
+      </div>
+
+      <div class="feature">
+        <h3>Step3: Notebookを開く</h3>
+        <p>フォルダの中にある「.ipynb」ファイルをダブルクリック！</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💫 超便利な使い方テクニック</h2>
+      
+      <div class="feature">
+        <h3>ファイルのアップロード方法</h3>
+        <div class="code code-python">
+<span class="comment"># これでファイルがアップロードできる！</span>
+<span class="keyword">from</span> <span class="builtin">google.colab</span> <span class="keyword">import</span> <span class="variable">files</span>
+<span class="variable">uploaded</span> = <span class="variable">files</span>.<span class="function">upload</span>()
+
+<span class="comment"># CSVファイルを読み込むならこんな感じ！</span>
+<span class="keyword">import</span> <span class="builtin">pandas</span> <span class="keyword">as</span> <span class="variable">pd</span>
+<span class="variable">df</span> = <span class="variable">pd</span>.<span class="function">read_csv</span>(次のファイル名)
+        </div>
+      </div>
+
+      <div class="feature">
+        <h3>ファイルのダウンロード方法</h3>
+        <div class="code code-python">
+<span class="comment"># 作ったファイルをダウンロードできるよ！</span>
+<span class="keyword">from</span> <span class="builtin">google.colab</span> <span class="keyword">import</span> <span class="variable">files</span>
+<span class="variable">files</span>.<span class="function">download</span>(<span class="string">'ファイル名'</span>)
+        </div>
+      </div>
+
+      <div class="feature">
+        <h3>いろんなコマンドを実行してみよう！</h3>
+        <div class="code code-shell">
+<span class="comment"># ライブラリをインストール</span>
+<span class="prompt">!</span><span class="command">pip install パッケージ名</span>
+
+<span class="comment"># CPU情報を見てみる</span>
+<span class="prompt">!</span><span class="command">lscpu</span>
+
+<span class="comment"># メモリ使用量をチェック</span>
+<span class="prompt">!</span><span class="command">free -h</span>
+
+<span class="comment"># GPUの確認</span>
+<span class="prompt">!</span><span class="command">nvidia-smi</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>💡 めっちゃ役立つTips集</h2>
+      
+      <div class="warning">
+        <h4>エラーが出ちゃった時の対処法！</h4>
+        <p>こんな時は初期化しちゃおう！</p>
+        <ol>
+          <li>「ランタイム」→「セッションの管理」で再起動</li>
+          <li>それでもダメなら「ランタイム」→「ランタイムを接続解除して削除」</li>
+          <li>最後の手段！ブラウザをリフレッシュ！</li>
+        </ol>
+      </div>
+
+      <div class="feature">
+        <h3>ショートカット技まとめ</h3>
+        <ul>
+          <li>Shift + Enter: セルを実行して次に進む</li>
+          <li>Ctrl + Enter: セルを実行するだけ</li>
+          <li>Alt + Enter: セルを実行して新しいセルを作る</li>
+        </ul>
+      </div>
+
+      <div class="success">
+        <h4>パワーアップテクニック！</h4>
+        <ul>
+          <li>GPU使用可能！設定から変更できる！</li>
+          <li>マークダウンでメモ書ける！</li>
+          <li>グラフがインタラクティブに！</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>⚡ トラブルシューティング</h2>
+      <div class="warning">
+        <h4>よくあるトラブルと解決方法</h4>
+        <ul>
+          <li>ランタイムが切れちゃった：
+            <p>→90分放置するとリセットされちゃうの！定期的に操作してね！</p>
+          </li>
+          <li>メモリ不足になっちゃった：
+            <p>→「ランタイム」→「ランタイムをすべて再起動」で解決！</p>
+          </li>
+          <li>ライブラリのバージョンが合わない：
+            <p>→バージョン指定でインストールしなおそう！</p>
+            <div class="code code-shell">
+<span class="prompt">!</span><span class="command">pip install lightgbm==3.3.5</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.getElementById("sidebarToggle")?.addEventListener("click", function() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar?.classList.toggle("open");
+        this.classList.toggle("active");
+    });
+</script>
+</body>
+</html>

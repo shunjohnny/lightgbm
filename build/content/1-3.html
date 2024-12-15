@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>環境構築マジ楽勝ガイド✨</title>
+<link href="../styles/styles.css" rel="stylesheet"/>
+<style>
+    <style>
+    body {
+        font-family: system-ui, -apple-system, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        background: #f8fafc;
+        padding: 2rem;
+    }
+    .container {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative;
+    }
+    .sidebar-toggle {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        background: white;
+        border: 1px solid #e2e8f0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        z-index: 1001;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar-toggle:hover {
+        background: #f1f5f9;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar-toggle.active {
+        background: #f1f5f9;
+        transform: translateX(-250px);
+    }
+    .sidebar {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100%;
+        background: #f1f5f9;
+        border-left: 1px solid #e2e8f0;
+        padding: 1rem;
+        padding-top: 4rem;
+        box-sizing: border-box;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .sidebar-content {
+        height: 100%;
+        overflow-y: auto;
+    }
+    .sidebar-item {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: #475569;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        border-radius: 0.375rem;
+        margin-bottom: 0.25rem;
+        font-size: 0.95rem;
+    }
+    .sidebar-item:hover {
+        background: white;
+        color: #1d4ed8;
+        transform: translateX(4px);
+    }
+    .back-button {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        height: 2.5rem;
+        padding: 0 1rem;
+        border-radius: 0.5rem;
+        background: white;
+        border: 1px solid #e2e8f0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+        z-index: 1001;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        color: #475569;
+        text-decoration: none;
+    }
+    .back-button:hover {
+        background: #f1f5f9;
+        transform: translateY(-1px);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        color: #1d4ed8;
+    }
+    .back-button span {
+        margin-right: 0.5rem;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>1.3 環境構築やってみよ～！🌈</h1>
+<p>超簡単！Colaboratoryで機械学習始めちゃお！</p>
+</div>
+<div class="content">
+<div class="card">
+<h2>🎁 サンプルコードをゲットしよう！</h2>
+<div class="feature">
+<h3>まずはコードをダウンロード！</h3>
+<p>このサンプルコードはマジ使える！lightgbm 3.3.5バージョンで作られてるの！</p>
+<div class="code code-shell">
+<span class="comment"># ここからダウンロードできるよ～！</span>
+<span class="command">https://www.shuwasystem.co.jp/support/7980html/6761.html</span>
+<span class="comment"># ダウンロードしたら↓の名前に変更してね！</span>
+<span class="command">lightgbm_sample</span>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>✨ Colaboratoryってなにそれ？</h2>
+<div class="feature">
+<p>超便利なツールなの！Googleが作った機械学習用の環境だよ！マジでいいことだらけ！：</p>
+<ul>
+<li>環境構築とかマジ不要！すぐ始められる！</li>
+<li>クラウドで動くから重たい処理もラクラク！</li>
+<li>よく使うライブラリ全部入り！
+            <ul>
+<li>pandas: データ分析の超便利ツール！</li>
+<li>numpy: 計算がめっちゃ速い！</li>
+<li>matplotlib: グラフ作れる！</li>
+<li>scikit-learn: 機械学習の定番！</li>
+<li>lightgbm: 予測モデルが爆速で作れる！</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="tip">
+<h4>超重要ポイント！</h4>
+<p>Googleアカウント持ってないとダメ！まだの人は急いで作っちゃお！💕</p>
+</div>
+</div>
+<div class="card">
+<h2>🔥 環境構築の手順を詳しく解説！</h2>
+<div class="feature">
+<h3>Step1: アクセス方法</h3>
+<div class="code code-shell">
+<span class="comment"># まずはここにアクセス！</span>
+<span class="command">https://colab.research.google.com/</span>
+<span class="comment"># Chromeブラウザがオススメ！他のブラウザだとたま～に動かないことあるよ！</span>
+</div>
+</div>
+<div class="feature">
+<h3>Step2: サンプルコードの準備</h3>
+<p>超簡単な手順だよ！</p>
+<ol>
+<li>「ドライブにコピー」ボタンをポチッと押す✨</li>
+<li>自動で「Colab Notebooks」ってフォルダができる！</li>
+<li>「lightgbm_sample」フォルダを投げ込むだけ！</li>
+</ol>
+</div>
+<div class="feature">
+<h3>Step3: Notebookを開く</h3>
+<p>フォルダの中にある「.ipynb」ファイルをダブルクリック！</p>
+</div>
+</div>
+<div class="card">
+<h2>💫 超便利な使い方テクニック</h2>
+<div class="feature">
+<h3>ファイルのアップロード方法</h3>
+<div class="code code-python">
+<span class="comment"># これでファイルがアップロードできる！</span>
+<span class="keyword">from</span> <span class="builtin">google.colab</span> <span class="keyword">import</span> <span class="variable">files</span>
+<span class="variable">uploaded</span> = <span class="variable">files</span>.<span class="function">upload</span>()
+
+<span class="comment"># CSVファイルを読み込むならこんな感じ！</span>
+<span class="keyword">import</span> <span class="builtin">pandas</span> <span class="keyword">as</span> <span class="variable">pd</span>
+<span class="variable">df</span> = <span class="variable">pd</span>.<span class="function">read_csv</span>(次のファイル名)
+        </div>
+</div>
+<div class="feature">
+<h3>ファイルのダウンロード方法</h3>
+<div class="code code-python">
+<span class="comment"># 作ったファイルをダウンロードできるよ！</span>
+<span class="keyword">from</span> <span class="builtin">google.colab</span> <span class="keyword">import</span> <span class="variable">files</span>
+<span class="variable">files</span>.<span class="function">download</span>(<span class="string">'ファイル名'</span>)
+        </div>
+</div>
+<div class="feature">
+<h3>いろんなコマンドを実行してみよう！</h3>
+<div class="code code-shell">
+<span class="comment"># ライブラリをインストール</span>
+<span class="prompt">!</span><span class="command">pip install パッケージ名</span>
+<span class="comment"># CPU情報を見てみる</span>
+<span class="prompt">!</span><span class="command">lscpu</span>
+<span class="comment"># メモリ使用量をチェック</span>
+<span class="prompt">!</span><span class="command">free -h</span>
+<span class="comment"># GPUの確認</span>
+<span class="prompt">!</span><span class="command">nvidia-smi</span>
+</div>
+</div>
+</div>
+<div class="card">
+<h2>💡 めっちゃ役立つTips集</h2>
+<div class="warning">
+<h4>エラーが出ちゃった時の対処法！</h4>
+<p>こんな時は初期化しちゃおう！</p>
+<ol>
+<li>「ランタイム」→「セッションの管理」で再起動</li>
+<li>それでもダメなら「ランタイム」→「ランタイムを接続解除して削除」</li>
+<li>最後の手段！ブラウザをリフレッシュ！</li>
+</ol>
+</div>
+<div class="feature">
+<h3>ショートカット技まとめ</h3>
+<ul>
+<li>Shift + Enter: セルを実行して次に進む</li>
+<li>Ctrl + Enter: セルを実行するだけ</li>
+<li>Alt + Enter: セルを実行して新しいセルを作る</li>
+</ul>
+</div>
+<div class="success">
+<h4>パワーアップテクニック！</h4>
+<ul>
+<li>GPU使用可能！設定から変更できる！</li>
+<li>マークダウンでメモ書ける！</li>
+<li>グラフがインタラクティブに！</li>
+</ul>
+</div>
+</div>
+<div class="card">
+<h2>⚡ トラブルシューティング</h2>
+<div class="warning">
+<h4>よくあるトラブルと解決方法</h4>
+<ul>
+<li>ランタイムが切れちゃった：
+            <p>→90分放置するとリセットされちゃうの！定期的に操作してね！</p>
+</li>
+<li>メモリ不足になっちゃった：
+            <p>→「ランタイム」→「ランタイムをすべて再起動」で解決！</p>
+</li>
+<li>ライブラリのバージョンが合わない：
+            <p>→バージョン指定でインストールしなおそう！</p>
+<div class="code code-shell">
+<span class="prompt">!</span><span class="command">pip install lightgbm==3.3.5</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<a class="back-button" href="../index.html">
+<span>←</span> インデックス
+    </a>
+
+<button class="sidebar-toggle" id="sidebarToggle">
+<span>📑</span>
+</button>
+<div class="sidebar" id="sidebar">
+<nav class="sidebar-content">
+<a class="sidebar-item" href="1-1.html">1.1 予測モデル入門！✨</a>
+<a class="sidebar-item" href="1-2.html">1.2 機械学習アルゴリズムをマスターしよう！🎮</a>
+<a class="sidebar-item" href="1-3.html">1.3 環境構築やってみよ～！🌈</a>
+<a class="sidebar-item" href="2-1.html">2-1 データ分析のディープな世界へようこそ！🌟</a>
+<a class="sidebar-item" href="2-2.html">2.2 線形回帰をマスターしちゃお！🌈</a>
+<a class="sidebar-item" href="2-3.html">2.3 回帰木で予測力アップデート！🌟</a>
+<a class="sidebar-item" href="2-4.html">2.4 LightGBMで予測力アップデート！🚀</a>
+<a class="sidebar-item" href="3-1.html">3.1 データ理解してみよう！🌈</a>
+</nav>
+</div>
+<script>
+        document.getElementById("sidebarToggle").addEventListener("click", function() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("open");
+            this.classList.toggle("active");
+        });
+    </script>
+</div>
+<script>
+    document.getElementById("sidebarToggle")?.addEventListener("click", function() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar?.classList.toggle("open");
+        this.classList.toggle("active");
+    });
+</script>
+</body>
+</html>
